@@ -1,0 +1,2 @@
+import"./assets/modulepreload-polyfill-3cfb730f.js";/* empty css                      */const r=require("@vimeo/player"),o=require("lodash.throttle"),t=new r(document.getElementById("vimeo-player")),n=o(()=>{t.getCurrentTime().then(e=>{localStorage.setItem("videoplayer-current-time",e)})},1e3);t.on("timeupdate",n);document.addEventListener("DOMContentLoaded",()=>{const e=localStorage.getItem("videoplayer-current-time");e&&t.setCurrentTime(parseFloat(e))});
+//# sourceMappingURL=commonHelpers2.js.map

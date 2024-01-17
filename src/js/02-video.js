@@ -1,15 +1,15 @@
-import Player from '@vimeo/player';
-import throttle from 'lodash.throttle';
-import { LS_KEYS, readFromLS, writeToLS } from './common';
+import VimeoPlayer from '@vimeo/player';
+import throttle from 'lodash/throttle';
+
+const LOCALSTORAGE_KEY = 'videoplayer-current-time';
 
 const iframe = document.querySelector('iframe');
-const player = new Player(iframe, { id: 'vimeo-player' });
+const player = new VimeoPlayer(iframe);
+const time = localStorage.getItem(LOCALSTORAGE_KEY);
+const onTimeupdate = throttle(e => {
+  localStorage.setItem(LOCALSTORAGE_KEY, e.seconds);
+}, 1000);
 
-player.on(
-  'timeupdate',
-  throttle(e => {
-    writeToLS(LS_KEYS.currentTime, e.seconds);
-  }, 1000)
-);
+time && player.setCurrentTime(time);
 
-player.setCurrentTime(readFromLS(LS_KEYS.currentTime) ?? 0);
+player.on('timeupdate', onTimeupdate);
